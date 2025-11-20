@@ -32,25 +32,39 @@ const App: React.FC = () => {
     { name: "Estacionarse", image: require("../../assets/images/Estacionarse.jpg") },
     { name: "Elevarse", image: require("../../assets/images/Elevarse.jpg") },
     { name: "lanzar", image: require("../../assets/images/Lanzar.jpg") },
-  ];
+  ];const pickAvatar = async (type: 'selected' | 'strategy') => {
+  const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
- const pickAvatar = async () => {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'],
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    
-    if (result.canceled){
-      console.log('User cancelled image picker');
-    }
-    
-    if(result){
-      console.log(result);
-    }
-  };
+  if (!permissionResult.granted) {
+    console.log('Permiso denegado');
+    return;
+  }
+
+  const result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    allowsEditing: true,
+    aspect: [4, 3],
+    quality: 1,
+    base64: true,
+  });
+
+  if (result.canceled) {
+    console.log('Usuario canceló');
+    return;
+  }
+
+  const base64 = result.assets?.[0]?.base64;
+  if (!base64) return;
+
+  if (type === 'selected') {
+    setSelectedImage(base64);
+  } else if (type === 'strategy') {
+    setStrategyImage(base64);
+  }
+
+  console.log(`${type} image base64:`, base64.substring(0, 100)); // primeras 100 letras
+};
+
 const handleSubmit = async () => {
   // Crear objeto con los datos del pit
   const pitData = {
@@ -170,7 +184,7 @@ const handleSubmit = async () => {
           />
         </View>
 
-        <Pressable style={styles.uploadButton} onPress={() => pickAvatar()}>
+        <Pressable style={styles.uploadButton} onPress={() => pickAvatar("selected")}>
           <Text style={styles.uploadText}>Subir imagen del robot</Text>
         </Pressable>
         {selectedImage && (
@@ -183,7 +197,7 @@ const handleSubmit = async () => {
         <Text style={styles.title}>Estrategia</Text>
         <View style={styles.strategySection}>
           <View style={styles.left}>
-            <Pressable style={styles.uploadButton} onPress={() => pickAvatar()}>
+            <Pressable style={styles.uploadButton} onPress={() => pickAvatar("strategy")}>
               <Text style={styles.uploadText}>Imagen de estrategia</Text>
             </Pressable>
             {strategyImage && (
