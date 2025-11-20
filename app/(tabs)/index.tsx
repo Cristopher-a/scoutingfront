@@ -55,6 +55,7 @@ const App: React.FC = () => {
   const wheelOptions = [
     { name: "Full Park", image: require("../../assets/images/siesta.jpg") },
     { name: "Partial Park", image: require("../../assets/images/malestacionado.jpg") },
+    {name: "High Park", image: require("../../assets/images/Elevarse.jpg")}
   ];const pickAvatar = async (type: 'selected' | 'strategy') => {
   const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
