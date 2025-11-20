@@ -21,17 +21,38 @@ const App: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [strategyImage, setStrategyImage] = useState<string | null>(null);
   const [strategyComment, setStrategyComment] = useState<string>("");
+  const [check1, setCheck1]=useState<"Sí" | "No" | null>(null);
+  const CheckCircle = ({
+    selected,
+    label,
+    onPress,
+  }: {
+    selected: boolean;
+    label: string;
+    onPress: () => void;
+  }) => (
+    <Pressable style={styles.checkOption} onPress={onPress}>
+      <View
+        style={[
+          styles.circle,
+          selected ? styles.circleSelected : styles.circleUnselected,
+        ]}
+      >
+        {selected && <View style={styles.innerCircle} />}
+      </View>
+      <Text style={styles.checkLabel}>{label}</Text>
+    </Pressable>
+  );
 
   const pitOptions = ["CDMX", "Cuautitlán", "Toluca"];
   const tractionOptions = [
   
     { name: "Mecanum", image: require("../../assets/images/mecanum.jpg") },
-    { name: "Swerve", image: require("../../assets/images/swerve.jpg") },
+    { name: "Tanque", image: require("../../assets/images/swerve.jpg") },
   ];
   const wheelOptions = [
-    { name: "Estacionarse", image: require("../../assets/images/Estacionarse.jpg") },
-    { name: "Elevarse", image: require("../../assets/images/Elevarse.jpg") },
-    { name: "lanzar", image: require("../../assets/images/Lanzar.jpg") },
+    { name: "Full Park", image: require("../../assets/images/siesta.jpg") },
+    { name: "Partial Park", image: require("../../assets/images/malestacionado.jpg") },
   ];const pickAvatar = async (type: 'selected' | 'strategy') => {
   const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -139,7 +160,7 @@ const handleSubmit = async () => {
 
       {/* ESPECIALIDAD */}
       <View style={styles.card}>
-        <Text style={styles.title}>¿Cuál es su especialidad?</Text>
+        <Text style={styles.title}>¿Como se estaciona?</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollRow}>
           {wheelOptions.map((opt, i) => (
             <Pressable
@@ -183,6 +204,24 @@ const handleSubmit = async () => {
             onChangeText={setBatteryNumber}
           />
         </View>
+        <View style={styles.inputGroup}>
+          <Text style={styles.inputLabel}>¿Cuanto tarda en hacer un ciclo?</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ingresa número"
+            keyboardType="numeric"
+            value={batteryNumber}
+            onChangeText={setBatteryNumber}
+          />
+        </View>
+        <View style={styles.inputGroup}>
+          <Text style={styles.inputLabel}>¿Tienes autonomo?</Text>
+          <View style={styles.checkContainer}>
+                <CheckCircle label="Sí" selected={check1 === "Sí"} onPress={() => setCheck1("Sí")} />
+                <CheckCircle label="No" selected={check1 === "No"} onPress={() => setCheck1("No")} />
+              </View>
+        </View>
+
 
         <Pressable style={styles.uploadButton} onPress={() => pickAvatar("selected")}>
           <Text style={styles.uploadText}>Subir imagen del robot</Text>
@@ -254,6 +293,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#c8b3a6",
     padding: 20,
   },
+  checkLabel: {
+    fontSize: 15,
+    color: "#5a3e36",
+    fontWeight: "500",
+  },
   header: {
     fontSize: 32,
     fontWeight: "900",
@@ -261,6 +305,34 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 25,
     marginTop:30,
+  }, checkContainer: {
+    flexDirection: "row",
+    gap: 12,
+  },
+  checkOption: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  circle: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  circleSelected: {
+    borderColor: "#8B5E3C",
+  },
+  circleUnselected: {
+    borderColor: "#5a3e36",
+  },
+  innerCircle: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: "#8B5E3C",
   },
   card: {
     backgroundColor: "#fffaf5",
