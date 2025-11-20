@@ -8,9 +8,10 @@ import {
 } from "react-native";
 
 const VALID_USERS: Record<number, string> = {
-  17625: "Quetzalin",
-  17626: "PurpleSpike",
-  17627: "Ehecatl",
+  17625: "Aztech1",
+  17626: "Aztech2",
+  17627: "Aztech3",
+
 };
 
 type LoginProps = {
