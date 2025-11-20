@@ -34,17 +34,23 @@ const App: React.FC = () => {
     { name: "lanzar", image: require("../../assets/images/Lanzar.jpg") },
   ];
 
-  const pickImage = async (setImage: React.Dispatch<React.SetStateAction<string | null>>) => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+ const pickAvatar = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      aspect: [4, 3],
       quality: 1,
     });
-
-    if (!result.canceled && result.assets.length > 0) {
-      setImage(result.assets[0].uri); // guarda la URI de la imagen seleccionada
+    
+    if (result.canceled){
+      console.log('User cancelled image picker');
+    }
+    
+    if(result){
+      console.log(result);
     }
   };
-
 const handleSubmit = async () => {
   // Crear objeto con los datos del pit
   const pitData = {
@@ -164,7 +170,7 @@ const handleSubmit = async () => {
           />
         </View>
 
-        <Pressable style={styles.uploadButton} onPress={() => pickImage(setSelectedImage)}>
+        <Pressable style={styles.uploadButton} onPress={() => pickAvatar()}>
           <Text style={styles.uploadText}>Subir imagen del robot</Text>
         </Pressable>
         {selectedImage && (
@@ -177,7 +183,7 @@ const handleSubmit = async () => {
         <Text style={styles.title}>Estrategia</Text>
         <View style={styles.strategySection}>
           <View style={styles.left}>
-            <Pressable style={styles.uploadButton} onPress={() => pickImage(setStrategyImage)}>
+            <Pressable style={styles.uploadButton} onPress={() => pickAvatar()}>
               <Text style={styles.uploadText}>Imagen de estrategia</Text>
             </Pressable>
             {strategyImage && (
