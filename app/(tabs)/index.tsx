@@ -22,6 +22,8 @@ const App: React.FC = () => {
   const [strategyImage, setStrategyImage] = useState<string | null>(null);
   const [strategyComment, setStrategyComment] = useState<string>("");
   const [check1, setCheck1]=useState<"Sí" | "No" | null>(null);
+  const [clycleNumber, setCycleNumber]= useState<string>("");
+  const [artifactsNumber, setartifactsNumber]=useState<string>("");
   const CheckCircle = ({
     selected,
     label,
@@ -210,8 +212,18 @@ const handleSubmit = async () => {
             style={styles.input}
             placeholder="Ingresa número"
             keyboardType="numeric"
-            value={batteryNumber}
-            onChangeText={setBatteryNumber}
+            value={clycleNumber}
+            onChangeText={setCycleNumber}
+          />
+        </View>
+        <View style={styles.inputGroup}>
+          <Text style={styles.inputLabel}>¿Pelotas por ciclo?</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ingresa número"
+            keyboardType="numeric"
+            value={artifactsNumber}
+            onChangeText={setartifactsNumber}
           />
         </View>
         <View style={styles.inputGroup}>
