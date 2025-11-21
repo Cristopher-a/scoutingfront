@@ -92,15 +92,18 @@ const App: React.FC = () => {
 const handleSubmit = async () => {
   // Crear objeto con los datos del pit
   const pitData = {
-    region: selectedPit,
-    traction_type: tractionOptions[selectedIndexTraction].name,
-    specialty: wheelOptions[selectedIndexWheel].name,
-    team_number: teamNumber,
-    battery_number: batteryNumber,
-    robot_image: selectedImage,
-    strategy_image: strategyImage,
-    strategy_comment: strategyComment
-  };
+  region: selectedPit,
+  traction_type: tractionOptions[selectedIndexTraction].name,
+  specialty: wheelOptions[selectedIndexWheel].name,
+  team_number: teamNumber,
+  battery_number: batteryNumber,
+  robot_image: selectedImage,
+  strategy_image: strategyImage,
+  strategy_comment: strategyComment,
+  cycle_number: clycleNumber,
+  artifacts_number: artifactsNumber,
+  check1: check1
+};
 
   console.log("Enviando pit:", pitData);
 
