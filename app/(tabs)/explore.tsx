@@ -88,8 +88,6 @@ const App: React.FC = () => {
     comment_general: comment
   };
 
-  console.log("Enviando match:", matchData);
-
   try {
     const response = await fetch("https://scoutbueno.vercel.app/match", {
       method: "POST",
@@ -102,7 +100,35 @@ const App: React.FC = () => {
     }
 
     const result = await response.json();
-    console.log("Datos enviados correctamente:", result);
+    alert("Datos enviados correctamente");
+
+  setTeamNumber("");
+  setMatchNumber("");
+  setSelectedRegional("CDMX");
+  setRobotRating(0);
+  setDriverRating(0);
+  setGeneralRating(0);
+  setCommentrobot("");
+  setCommentdriver("");
+  setComment("");
+
+  setVisiblePit(false);
+
+  setCount2auto(0);
+  setCount2teleop(0);
+  setCount2endgame(0);
+  setCount3endgame(0);
+
+  setCount3auto(0);
+  setCount3teleop(0);
+  setcountmottif(0);
+  setCountrp(0);
+
+  setCheck1(null);
+  setCheck2(null);
+  setCheck3(null);
+  setCheck4(null);
+  setCheckinicio(null);
 
   } catch (error) {
     console.error("Error enviando match:", error);
