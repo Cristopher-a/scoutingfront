@@ -105,7 +105,6 @@ const handleSubmit = async () => {
   check1: check1
 };
 
-  console.log("Enviando pit:", pitData);
 
   try {
     const response = await fetch("https://scoutbueno.vercel.app/pits", {
@@ -119,8 +118,19 @@ const handleSubmit = async () => {
     }
 
     const result = await response.json();
-    console.log("Pit enviado correctamente:", result);
-
+    alert("Pit enviado correctamente");
+    setSelectedPit("Regional");
+  setVisiblePit(false);
+  setTeamNumber("");
+  setBatteryNumber("");
+  setSelectedIndexTraction(0);
+  setSelectedIndexWheel(0);
+  setSelectedImage(null);
+  setStrategyImage(null);
+  setStrategyComment("");
+  setCheck1(null);
+  setCycleNumber("");
+  setartifactsNumber("");
   } catch (error) {
     console.error("Error enviando pit:", error);
   }
